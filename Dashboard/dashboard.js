@@ -41,17 +41,17 @@ const inputNote = document.querySelector('#inputNote')
 const addNote = async (e) => {
     e.preventDefault();
     try {
-        if(!inputNote.value){
+        if (!inputNote.value) {
             alert('Please Enter to add in todo')
             return
         }
         else if (inputNote) {
             const note = inputNote.value.trim()
             console.log('note', note)
-            const todo = await setDoc(doc(db , "todosData" , "todo"),{
+            const todo = await setDoc(doc(db, "todosData", "todo"), {
                 note
             })
-            console.log('todo' , todo)
+            console.log('todo', todo)
             // alert('added succesfully')
         }
     } catch (error) {
