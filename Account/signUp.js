@@ -1,4 +1,4 @@
-import { app, auth, createUserWithEmailAndPassword, db, doc, setDoc } from "./Firebase.js";
+import { app, auth, createUserWithEmailAndPassword, db, doc, setDoc } from "../Firebase.js";
 // console.log('app' , app)
 // console.log('auth' , auth)
 // console.log('createUserWithEmailAndPassword' , createUserWithEmailAndPassword)
@@ -18,10 +18,10 @@ const signup = async (e) => {
         else if (email.value && password.value && confirmPassword.value && dob.value) {
             if (password.value === confirmPassword.value) {
                 console.log('password match =', true)
-                const storage = localStorage.getItem('authToken')
+                const storage = localStorage.getItem('uid')
                 if (storage) {
                     alert('You are already login')
-                    window.location.replace('./Dashboard/dashboard.html')
+                    window.location.replace('../index.html')
                     return
                 }
                 const user = await createUserWithEmailAndPassword(auth, email.value, password.value)
@@ -35,9 +35,9 @@ const signup = async (e) => {
                     console.log('userData added successfull')
 
                     if (!storage) {
-                        localStorage.setItem('authToken', user.user.uid)
+                        localStorage.setItem('uid', user.user.uid)
                         alert('account create successfully')
-                        window.location.replace('./Dashboard/dashboard.html')
+                        window.location.replace('../index.html')
                     }
 
                 }
