@@ -1,8 +1,9 @@
-import { app, auth, createUserWithEmailAndPassword, db, doc, setDoc } from "../Firebase.js";
+// import { app, auth, createUserWithEmailAndPassword, db, doc, setDoc } from "../Firebase.js";
 // console.log('app' , app)
 // console.log('auth' , auth)
 // console.log('createUserWithEmailAndPassword' , createUserWithEmailAndPassword)
-
+import { supabaseClient } from "../Supabase.js";
+console.log('supabase', supabaseClient)
 const fullName = document.getElementById('signupFullName');
 const email = document.getElementById('signupEmail');
 const password = document.getElementById('signupPassword');
@@ -24,24 +25,44 @@ const signup = async (e) => {
                     window.location.replace('../index.html')
                     return
                 }
-                const user = await createUserWithEmailAndPassword(auth, email.value, password.value)
-                console.log('user', user)
-                if (user) {
-                    await setDoc(doc(db, "usersData", user.user.uid), {
-                        fullName: fullName.value,
-                        email: email.value,
-                        dob: dob.value
-                    })
-                    console.log('userData added successfull')
+                // const user = await createUserWithEmailAndPassword(auth, email.value, password.value)
+                const { data, error } = await supabaseClient.auth.signUp({
+                    email: email.value,
+                    password: password.value,
+                })
 
-                    if (!storage) {
-                        localStorage.setItem('uid', user.user.uid)
-                        alert('account create successfully')
-                        window.location.replace('../index.html')
+                console.log('user', data)
+                console.log('error', error)
+                if (data) {
+                    const userData = {
+                        display_name: fullName.value,
+                        email: email.value,
+                        dob: dob.value,
+                        uid: localStorage.getItem('uid')
                     }
 
+                    const { data, error } = await supabaseClient
+                        .from('users')
+                        .insert(userData)
+                        .select()
+
+                        if(data){
+                            console.log('usersData' , data)
+                            console.log('userData added successfull')
+                        }
+                        else if(error){
+                            console.log('usersData Error' , error)
+                            console.log('Something went wrong')
+                        }
+
+                    // if (!storage) {
+                    //     localStorage.setItem('uid', user.user.uid)
+                    //     alert('account create successfully')
+                    //     window.location.replace('../index.html')
+                    // }
+
                 }
-                else {
+                else if (error) {
                     console.log('something went wrong')
                 }
             }

@@ -1,7 +1,5 @@
-import { app, auth, signInWithEmailAndPassword } from "../Firebase.js";
-// console.log('app' , app)
-// console.log('auth' , auth)
-// console.log('createUserWithEmailAndPassword' , createUserWithEmailAndPassword)
+import { supabaseClient } from "../Supabase.js";
+console.log('supabase', supabaseClient)
 
 const email = document.getElementById('loginEmail');
 const password = document.getElementById('loginPassword');
@@ -14,19 +12,26 @@ const login = async (e) => {
             return;
         }
         else if (email.value && password.value) {
-            const storage = localStorage.getItem('uid')
-            if (storage) {
+            const storage = localStorage.getItem('sb-voeeetuomtolemoykfnz-auth-token')
+            const storageUid = localStorage.getItem('uid')
+            if (storage && storageUid) {
                 alert('You are already login')
                 window.location.replace('../index.html')
                 return
             }
-            const user = await signInWithEmailAndPassword(auth, email.value, password.value)
-            if (user) {
-                if (!storage) {
-                    localStorage.setItem('uid', user.user.uid)
+            const { data, error } = await supabaseClient.auth.signInWithPassword({
+                email: email.value,
+                password: password.value,
+            })
+
+            console.log('user', data)
+            console.log('user id', data.user.id)
+            console.log('error', error)
+            const uid = data.user.id
+            if (data) {
+                    localStorage.setItem('uid', uid)
                     alert('Login successfully')
                     window.location.replace('../index.html')
-                }
             }
             else {
                 console.log('something went wrong')
@@ -36,15 +41,9 @@ const login = async (e) => {
             console.log('something went wrong')
         }
     } catch (error) {
-        console.log('error', error.message)
-        alert(error.code)
+        console.log('error', error)
     }
     console.log('signup button click')
-    // console.log('email', email.value)
-    // console.log('password', password.value)
-    // console.log('confirmPassword', confirmPassword.value)
-    // console.log('dob', dob.value)
-
 }
 
 window.login = login

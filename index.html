@@ -39,13 +39,13 @@
                     </button>
                     <ul class="dropdown-menu">
                         <span id="dropdown-div">
-                            <li><a class="dropdown-item" href="#">My Profile</a></li>
+                            <!-- <li><a class="dropdown-item" href="#">My Profile</a></li> -->
                             <div class="dropdown-divider"></div>
                             <li><a class="dropdown-item" href="./Account/index.html">Login</a></li>
                             <li><a class="dropdown-item" href="./Account/SignUp.html">SignUp</a></li>
                         </span>
                         <span id="dropdown-div-logout">
-                            <li><a class="dropdown-item" href="#">My Profile</a></li>
+                            <!-- <li><a class="dropdown-item" href="./profile.html">My Profile</a></li> -->
                             <div class="dropdown-divider"></div>
                             <li onclick="logoutHandler(event)"><a class="dropdown-item" href="#">Logout</a></li>
                         </span>
@@ -56,7 +56,8 @@
     </nav>
     <div class="container shadow rounded mt-5 w-50 p-5 shadow p-3 mb-5 bg-white rounded d-flex"
         style="gap: 1rem;align-items: center;">
-        <input type="text" onclick="inputClick()" placeholder="Enter your notes...." class="form-control" id="inputNote" />
+        <input type="text" value="Obliqware" onclick="inputClick()" placeholder="Enter your notes...." class="form-control"
+            id="inputNote" />
         <select class="form-select w-50" id="notePrivacy">
             <option value="public">Public</option>
             <option value="private">Private</option>
@@ -84,5 +85,5 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
-
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 </html>
