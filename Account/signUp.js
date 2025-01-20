@@ -46,14 +46,20 @@ const signup = async (e) => {
                         .insert(userData)
                         .select()
 
-                        if(data){
-                            console.log('usersData' , data)
-                            console.log('userData added successfull')
-                        }
-                        else if(error){
-                            console.log('usersData Error' , error)
-                            console.log('Something went wrong')
-                        }
+                    if (data) {
+                        console.log('usersData', data)
+                        console.log('userData added successfull')
+                        alert('userData added successfull')
+                        fullName.value = ""
+                        email.value = ""
+                        password.value = ""
+                        confirmPassword.value = ""
+                        dob.value = ""
+                    }
+                    else if (error) {
+                        console.log('usersData Error', error)
+                        console.log('Something went wrong')
+                    }
 
                     // if (!storage) {
                     //     localStorage.setItem('uid', user.user.uid)
